@@ -58,7 +58,7 @@ public class Spinning extends JPanel{
 
         positionX3 = 300;
         positionY3 = 300;
-         
+
     }
 
     public void Go(){
