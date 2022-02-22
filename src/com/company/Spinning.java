@@ -10,15 +10,18 @@ public class Spinning extends JPanel{
     public static final int WIDTH = 1024;
     public static final int HEIGHT = 768;
     public static final int FPS = 60;
-    public static final int RADIUS = 25;
-    public static final int RADIUS2 = 10;
-    public static final int RADIUS3 = 50;
+//    public static final int RADIUS = 25;
+//    public static final int RADIUS2 = 10;
+//    public static final int RADIUS3 = 50;
     public static final double CENTERX = WIDTH / 2.0;
     public static final double CENTERY = HEIGHT / 2.0;
 
+
+/*
     public Color color = Color.white;
     public Color color2 = Color.green;
     public Color color3 = Color.orange;
+ */
 
     //Right now spheres isn't being used
     public static Sphere[] spheres;
@@ -26,6 +29,7 @@ public class Spinning extends JPanel{
     //You'll get rid of the following set of variables
     //Instead, let each Sphere keep track of its own velocity and position
 
+    /*
     double positionX;
     double positionY;
 
@@ -43,6 +47,7 @@ public class Spinning extends JPanel{
 
     double velocityX3;
     double velocityY3;
+     */
 
 
 
@@ -50,6 +55,7 @@ public class Spinning extends JPanel{
         this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         //Feel free to set default values as you see fit
 
+        /*
         positionX = 275;
         positionY = HEIGHT - 275;
 
@@ -58,45 +64,16 @@ public class Spinning extends JPanel{
 
         positionX3 = 300;
         positionY3 = 300;
+         */
 
     }
 
     public void Go(){
         while(true){
             //You'll be changing the following
-            double deltaX = positionX - CENTERX;
-            double deltaY = positionY - CENTERY;
-
-            velocityX = -deltaY;
-            velocityY =  deltaX;
-
-            positionX += velocityX * 1.0/(double)FPS;
-            positionY += velocityY * 1.0/(double)FPS;
-
-            double deltaX2 = positionX2 - CENTERX;
-            double deltaY2 = positionY2 - CENTERY;
-
-            velocityX2 = -deltaY2;
-            velocityY2 =  deltaX2;
-
-            positionX2 += velocityX2 * 1.0/(double)FPS;
-            positionY2 += velocityY2 * 1.0/(double)FPS;
-
-            double deltaX3 = positionX3 - CENTERX;
-            double deltaY3 = positionY3 - CENTERY;
-
-            velocityX3 =  deltaY3;
-            velocityY3 = -deltaX3;
-
-            positionX3 += velocityX3 * 1.0/(double)FPS;
-            positionY3 += velocityY3 * 1.0/(double)FPS;
-
-            //don't mess too much with the rest of this method
-            repaint();
-            try{
-                Thread.sleep(1000/FPS);
+            for (Sphere s : spheres){
+                s.update(1.0 / (double)FPS);
             }
-            catch(InterruptedException e){}
         }
     }
 
@@ -114,6 +91,14 @@ public class Spinning extends JPanel{
         //here you'll set up the spheres array
         spheres = new Sphere[numSpheres];
 
+        for (int i = 0; i < numSpheres; i++) {
+            Sphere s = new Sphere(((int)(10+Math.random()*70)), ((int)(-40+Math.random()*1024)), ((int)(-40+Math.random()*768)),
+                    ((int)(Math.random()*20)), ((int)(Math.random()*20)), ((int)(Math.random()*255)),
+                    ((int)(Math.random()*255)), ((int)(Math.random()*255)));
+            spheres[i] = s;
+
+        }
+
         JFrame frame = new JFrame("Spinning Spheres");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Spinning world = new Spinning();
@@ -128,18 +113,14 @@ public class Spinning extends JPanel{
         g.fillRect(0, 0, WIDTH, HEIGHT);
 
         //your code here for drawing the other spheres (you'll replace the following lines)
-        g.setColor(color);
-        g.fillOval((int)positionX,  (int)positionY,   RADIUS * 2,   RADIUS * 2);
-        g.setColor(color2);
-        g.fillOval((int)positionX2, (int)positionY2,  RADIUS2 * 2,  RADIUS2 * 2);
-        g.setColor(color3);
-        g.fillOval((int)positionX3, (int)positionY3,  RADIUS3 * 2,  RADIUS3 * 2);
 
+        for (Sphere s : spheres){
+            s.draw(g);
+        }
     }
-}
 
 //You'll implement this class
-class Sphere {
+static class Sphere {
     //Put fields here:
     int radius;
     int xPos;
@@ -167,9 +148,7 @@ class Sphere {
         }
         if (blue > 255) {
             bval = 255;
-        }
-
-        else{
+        } else {
             rval = red;
             gval = green;
             bval = blue;
@@ -187,8 +166,8 @@ class Sphere {
         if (yPos < 0 || yPos + radius > 768) {
             velocityY = -velocityY;
         }
-        xPos += (int)(velocityX*time);
-        yPos += (int)(velocityY*time);
+        xPos += (int) (velocityX * time);
+        yPos += (int) (velocityY * time);
     }
 
     public void draw(Graphics g) {
@@ -196,4 +175,5 @@ class Sphere {
         g.fillOval(xPos, yPos, radius, radius);
     }
 
+}
 }
