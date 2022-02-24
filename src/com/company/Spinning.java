@@ -206,6 +206,17 @@ static class Sphere {
 
     public void update(double time) {
         //move in a circle
+        if (this.yPos == CENTERY) {
+            velocityX = -velocityX;
+        }
+        if (this.xPos == CENTERX) {
+            velocityY = -velocityY;
+        }
+
+        this.xPos += this.velocityX*time;
+        this.yPos += this.velocityY*time;
+
+
     }
 
     public void draw(Graphics g) {
