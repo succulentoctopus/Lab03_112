@@ -1,4 +1,4 @@
-package com.company;
+//package com.company;
 
 import javax.swing.JPanel;
 import javax.swing.JFrame;
@@ -6,21 +6,18 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Dimension;
 
+/*
+challenge implemented:
+spheres spinning around a central sphere (that code is in commented out code chunks)
+ */
+
 public class Spinning extends JPanel{
     public static final int WIDTH = 1024;
     public static final int HEIGHT = 768;
     public static final int FPS = 60;
-//    public static final int RADIUS = 25;
-//    public static final int RADIUS2 = 10;
-//    public static final int RADIUS3 = 50;
     public static final double CENTERX = WIDTH / 2.0;
     public static final double CENTERY = HEIGHT / 2.0;
 
-/*
-    public Color color = Color.white;
-    public Color color2 = Color.green;
-    public Color color3 = Color.orange;
- */
 
     //Right now spheres isn't being used
     public static Sphere[] spheres;
@@ -28,42 +25,11 @@ public class Spinning extends JPanel{
     //You'll get rid of the following set of variables
     //Instead, let each Sphere keep track of its own velocity and position
 
-    /*
-    double positionX;
-    double positionY;
-
-    double velocityX;
-    double velocityY;
-
-    double positionX2;
-    double positionY2;
-
-    double velocityX2;
-    double velocityY2;
-
-    double positionX3;
-    double positionY3;
-
-    double velocityX3;
-    double velocityY3;
-     */
-
 
 
     public Spinning(){
         this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         //Feel free to set default values as you see fit
-
-        /*
-        positionX = 275;
-        positionY = HEIGHT - 275;
-
-        positionX2 = 500;
-        positionY2 = 500;
-
-        positionX3 = 300;
-        positionY3 = 300;
-         */
 
     }
 
@@ -97,7 +63,7 @@ public class Spinning extends JPanel{
         //here you'll set up the spheres array
         spheres = new Sphere[numSpheres];
 
-        /*
+
         for (int i = 0; i < numSpheres; i++) {
             Sphere s = new Sphere(((int)(10+Math.random()*70)), ((int)(-40+Math.random()*1024)), ((int)(-40+Math.random()*768)),
                     ((int)(300 + Math.random()*500)), ((int)(300 + Math.random()*500)), ((int)(Math.random()*255)),
@@ -105,27 +71,27 @@ public class Spinning extends JPanel{
             spheres[i] = s;
 
         }
-         */
 
-
+        /*
         Sphere sphere1 = new Sphere(50, (1024/2), (768/2), 0, 0, ((int)(Math.random()*255)),
                 ((int)(Math.random()*255)), ((int)(Math.random()*255)));
         spheres[0] = sphere1;
         for (int i = 1; i < numSpheres; i++) {
             if (i%2 == 0) {
-                Sphere s = new Sphere(((int) (10 + Math.random() * 40)), (1024 / 2), (int) ((CENTERX / numSpheres) * i),
-                        ((int) (300 + Math.random() * 500)), ((int) -(300 + Math.random() * 500)), ((int) (Math.random() * 255)),
+                Sphere s = new Sphere(((int) (10 + Math.random() * 40)), (1024 / 2), (int) ((CENTERY / numSpheres) * i),
+                        500, 500, ((int) (Math.random() * 255)),
                         ((int) (Math.random() * 255)), ((int) (Math.random() * 255)));
                 spheres[i] = s;
             }
             else {
-                Sphere s = new Sphere(((int) (10 + Math.random() * 40)), (1024 / 2), (int) ((CENTERX / numSpheres) * i),
-                        ((int) -(300 + Math.random() * 500)), ((int) -(300 + Math.random() * 500)), ((int) (Math.random() * 255)),
+                Sphere s = new Sphere(((int) (10 + Math.random() * 40)), (1024 / 2), (int) ((CENTERY / numSpheres) * i),
+                        -500, 500, ((int) (Math.random() * 255)),
                         ((int) (Math.random() * 255)), ((int) (Math.random() * 255)));
                 spheres[i] = s;
             }
 
         }
+         */
 
 
         JFrame frame = new JFrame("Spinning Spheres");
@@ -187,9 +153,7 @@ static class Sphere {
 
 
 //Put methods (update, draw, and whatever else you decide to implement) here:
-    
 
-    /*
     public void update(double time) {
         if (this.xPos < 0 || this.xPos + this.radius > 1024) {
             this.velocityX = -this.velocityX;
@@ -202,22 +166,28 @@ static class Sphere {
         //System.out.println("position = " + xPos);
         this.yPos += this.velocityY*time;
     }
-     */
 
+
+    /*
     public void update(double time) {
         //move in a circle
-        if (this.yPos == CENTERY) {
+        if ((this.velocityX < 0 && this.velocityY > 0) && (this.yPos >= CENTERY)) {
             velocityX = -velocityX;
         }
-        if (this.xPos == CENTERX) {
+        if ((this.velocityX > 0 && this.velocityY > 0) && (this.xPos >= CENTERX)) {
+            velocityY = -velocityY;
+        }
+        if ((this.velocityX > 0 && this.velocityY < 0) && (this.yPos <= CENTERY)) {
+            velocityX = -velocityX;
+        }
+        if ((this.velocityX < 0 && this.velocityY < 0) && (this.xPos <= CENTERX)) {
             velocityY = -velocityY;
         }
 
         this.xPos += this.velocityX*time;
         this.yPos += this.velocityY*time;
-
-
     }
+     */
 
     public void draw(Graphics g) {
         g.setColor(new Color(rval, gval, bval));
